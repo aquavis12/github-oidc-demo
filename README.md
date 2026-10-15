@@ -1,6 +1,6 @@
 # GitHub Actions → AWS OIDC Demo
 
-A minimal demo of how GitHub Actions authenticates to AWS using OpenID Connect (OIDC).
+A demo of how GitHub Actions authenticates to AWS using OpenID Connect (OIDC).
 
 This demo does **not** store an AWS Access Key ID or Secret Access Key in GitHub Secrets. Instead, the workflow exchanges a short-lived GitHub-issued token for temporary AWS credentials.
 
