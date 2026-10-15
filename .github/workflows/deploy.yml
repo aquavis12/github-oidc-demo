@@ -24,7 +24,7 @@ jobs:
 
     env:
       AWS_REGION: us-east-1
-      AWS_ROLE_ARN: arn:aws:iam::<AWS_ACCOUNT_ID>:role/GitHubActionsS3DemoRole
+      AWS_ROLE_ARN: arn:aws:iam::593845248500:role/S3-ROLE
 
     steps:
       - name: Checkout repository
