@@ -19,7 +19,7 @@ jobs:
 
     env:
       AWS_REGION: us-east-1
-      AWS_ROLE_ARN: arn:aws:iam::593845248500:role/S3-ROLE
+      AWS_ROLE_ARN: arn:aws:iam::393036065076:role/S3-ROLE
 
     steps:
       - name: Checkout repository
@@ -31,7 +31,6 @@ jobs:
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
           role-session-name: GitHubActions-${{ github.run_id }}
           aws-region: ${{ env.AWS_REGION }}
-          audience: sts.amazonaws.com
 
       - name: Check AWS identity
         run: |
