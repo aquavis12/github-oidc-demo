@@ -7,7 +7,7 @@ This demo does **not** store an AWS Access Key ID or Secret Access Key in GitHub
 ```text
 GitHub Actions
       ↓
-GitHub OIDC token (JWT)
+GitHub OIDC token 
       ↓
 AWS STS (AssumeRoleWithWebIdentity)
       ↓
