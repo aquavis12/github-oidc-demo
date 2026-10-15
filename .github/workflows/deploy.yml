@@ -4,11 +4,10 @@ on:
   push:
     branches:
       - main
+
   workflow_dispatch:
 
-# Least privilege at the workflow level.
-# id-token: write lets the job request a GitHub OIDC token.
-# It does not grant any permissions in AWS by itself.
+# Required for GitHub OIDC
 permissions:
   id-token: write
   contents: read
@@ -17,10 +16,6 @@ jobs:
   aws-oidc-demo:
     name: Verify AWS access via OIDC
     runs-on: ubuntu-latest
-
-    # Must match the sub condition in the IAM trust policy:
-    # repo:<ORG>/<REPO>:environment:production
-    environment: production
 
     env:
       AWS_REGION: us-east-1
@@ -31,17 +26,20 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configure AWS credentials via OIDC
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
           role-session-name: GitHubActions-${{ github.run_id }}
           aws-region: ${{ env.AWS_REGION }}
+          audience: sts.amazonaws.com
 
       - name: Check AWS identity
-        run: aws sts get-caller-identity
+        run: |
+          echo "Checking AWS identity..."
+          aws sts get-caller-identity
 
       - name: List S3 buckets
         run: |
-          echo "Listing S3 buckets in the account..."
+          echo "Listing S3 buckets..."
           aws s3 ls
-          echo "Done. An empty list is expected if the account has no buckets."
+          echo "Done."
