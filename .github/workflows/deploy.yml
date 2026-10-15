@@ -19,7 +19,7 @@ jobs:
 
     env:
       AWS_REGION: us-east-1
-      AWS_ROLE_ARN: arn:aws:iam::393036065076:role/S3-ROLE
+      AWS_ROLE_ARN: arn:aws:iam::XXXXXXXXXXXXX:role/S3-ROLE
 
     steps:
       - name: Checkout repository
@@ -40,14 +40,7 @@ jobs:
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
           role-session-name: GitHubActions-${{ github.run_id }}
           aws-region: ${{ env.AWS_REGION }}
-
-      - name: Print OIDC claims (temporary)
-        run: |
-          TOKEN=$(curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.amazonaws.com" | jq -r '.value')
-          echo "$TOKEN" | cut -d. -f2 | tr '_-' '/+' \
-            | awk '{ while (length($0) % 4) $0 = $0 "="; print }' \
-            | base64 -d 2>/dev/null | jq '{sub, aud, iss}'    
+  
 
       - name: Check AWS identity
         run: |
